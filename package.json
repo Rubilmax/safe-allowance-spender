@@ -7,9 +7,9 @@
     "url": "https://github.com/rubilmax"
   },
   "license": "MIT",
-  "main": "function/index.js",
+  "main": "dist/index.js",
   "files": [
-    "function/*"
+    "dist"
   ],
   "scripts": {
     "prepare": "husky",
@@ -17,7 +17,8 @@
     "prebuild": "rm -rf dist",
     "build": "esbuild src/index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
     "postbuild": "cd dist && zip -r index.zip index.js*",
-    "deploy": "aws lambda update-function-code --function-name safe-allowance-spender --zip-file fileb://dist/index.zip"
+    "deploy": "yarn build && aws lambda update-function-code --function-name safe-allowance-spender --zip-file fileb://dist/index.zip",
+    "encrypt": "ts-node scripts/encrypt.ts"
   },
   "repository": {
     "type": "git",
